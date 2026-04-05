@@ -17,7 +17,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'status'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 #[Appends(['openShift'])]
 class User extends Authenticatable
@@ -44,7 +44,7 @@ class User extends Authenticatable
         return $this->hasMany(Shift::class);
     }
 
-    public function openShift(): Attribute
+    public function getOpenShiftAttribute(): Attribute
     {
         return Attribute::make(function () {
             return $this->shifts()->whereNull('end_time')->first() ?? false;

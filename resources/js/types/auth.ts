@@ -1,11 +1,13 @@
 export type User = {
     id: number;
     name: string;
+    known_as?: string;
     email: string;
     avatar?: string;
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    shifts: object[];
     [key: string]: unknown;
 };
 

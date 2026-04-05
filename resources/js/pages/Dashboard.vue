@@ -2,7 +2,9 @@
 import { Head } from '@inertiajs/vue3';
 import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 import { dashboard } from '@/routes';
+import { User } from '@/types';
 
+defineProps<{user: User}>();
 defineOptions({
     layout: {
         breadcrumbs: [
@@ -25,6 +27,7 @@ defineOptions({
             <div
                 class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
             >
+                <pre class="whitespace-pre">{{ user.shifts }}</pre>
                 <PlaceholderPattern />
             </div>
             <div
