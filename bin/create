@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+composer i \
+    && npm i
+    && php artisan migrate:fresh --seed \
+    && npm run build
+    && echo "Done"
