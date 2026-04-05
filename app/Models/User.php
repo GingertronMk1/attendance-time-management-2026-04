@@ -17,9 +17,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
-#[Fillable(['name', 'email', 'password', 'status'])]
+#[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
-#[Appends(['openShift'])]
+#[Appends(['open_shift'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -41,22 +41,30 @@ class User extends Authenticatable
 
     public function shifts(): HasMany
     {
-        return $this->hasMany(Shift::class);
+        return $this->hasMany(Shift::class)->orderByDesc('start_time');
     }
 
-    public function getOpenShiftAttribute(): Attribute
+    /**
+     * @return Attribute<Shift|false>
+     */
+    public function openShift(): Attribute
     {
         return Attribute::make(function () {
             return $this->shifts()->whereNull('end_time')->first() ?? false;
         });
     }
 
+    /**
+     * @throws \Exception
+     */
     public function startShift(): Shift
     {
-        return $this->shifts()->create([
+        $newShift = new Shift([
             'status' => ShiftStatusEnum::PENDING,
             'start_time' => now(),
-            'notes' => ''
+            'notes' => '',
         ]);
+        $newShift->user()->associate($this);
+        return $newShift->save() ? $newShift : throw new \Exception('Failed to start shift');
     }
 }
