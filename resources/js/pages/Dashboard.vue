@@ -54,7 +54,10 @@ async function toggle() {
         >
             <h3 class="flex flex-row justify-between">
                 <span class="text-xl">Shifts</span>
-                <button @click="toggle">
+                <button @click="toggle" class="rounded-sm py-1 px-2 text-white cursor-pointer hover:brightness-90" :class="{
+                    'bg-red-800': user.open_shift,
+                    'bg-green-800': !user.open_shift,
+                }">
                     {{ user.open_shift ? 'End Shift' : 'New Shift' }}
                 </button>
             </h3>
