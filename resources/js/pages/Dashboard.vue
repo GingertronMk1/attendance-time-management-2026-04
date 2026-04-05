@@ -19,7 +19,7 @@ defineOptions({
 
 const { url, method } = toggleShift();
 async function toggle() {
-    const resp = await fetch(url, {
+    await fetch(url, {
         method: method,
     });
     router.reload({ only: ['user'] });
