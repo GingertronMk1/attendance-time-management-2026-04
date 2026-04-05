@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
+import eslint from 'vite-plugin-eslint';
 
 export default defineConfig({
     plugins: [
@@ -23,6 +24,9 @@ export default defineConfig({
         }),
         wayfinder({
             formVariants: true,
+        }),
+        eslint({
+            fix: true,
         }),
     ],
 });
