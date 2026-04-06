@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Shift;
 use App\Models\User;
 use App\ShiftStatusEnum;
-use DateInterval;
 use DateMalformedIntervalStringException;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Date;

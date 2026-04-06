@@ -23,7 +23,11 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, HasUuids, Notifiable, SoftDeletes, TwoFactorAuthenticatable;
+    use HasFactory;
+    use HasUuids;
+    use Notifiable;
+    use SoftDeletes;
+    use TwoFactorAuthenticatable;
 
     /**
      * Get the attributes that should be cast.
@@ -65,6 +69,7 @@ class User extends Authenticatable
             'notes' => '',
         ]);
         $newShift->user()->associate($this);
+
         return $newShift->save() ? $newShift : throw new \Exception('Failed to start shift');
     }
 }

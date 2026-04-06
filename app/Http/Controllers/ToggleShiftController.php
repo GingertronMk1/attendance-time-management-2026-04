@@ -20,9 +20,11 @@ class ToggleShiftController extends Controller
         }
         if ($user->openShift) {
             $user->openShift->stop();
+
             return ['status' => 'stopped'];
         } else {
             $user->startShift();
+
             return ['status' => 'started'];
         }
     }
