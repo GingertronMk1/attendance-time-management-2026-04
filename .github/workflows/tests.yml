@@ -17,10 +17,6 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php-version: ['8.3', '8.4', '8.5']
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -28,7 +24,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
+          php-version: 8.5
           tools: composer:v2
           coverage: xdebug
 
@@ -36,6 +32,18 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '22'
+
+      - name: Cache Composer Dependencies
+        uses: actions/cache@v5
+        with:
+          path: vendor
+          key: ${{ hashFiles('composer.lock') }}
+
+      - name: Cache NPM Dependencies
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: ${{ hashFiles('package-lock.json') }}
 
       - name: Install Node Dependencies
         run: npm i
@@ -52,5 +60,8 @@ jobs:
       - name: Build Assets
         run: npm run build
 
+      - name: Migrate
+        run: php artisan migrate:fresh
+
       - name: Tests
-        run: ./vendor/bin/pest
+        run: ./bin/test

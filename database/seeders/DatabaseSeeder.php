@@ -19,5 +19,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
         User::factory(10)->create();
+        $this->call([
+            ShiftSeeder::class,
+        ]);
     }
 }
