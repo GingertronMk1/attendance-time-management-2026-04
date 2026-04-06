@@ -64,4 +64,4 @@ jobs:
         run: php artisan migrate:fresh
 
       - name: Tests
-        run: php artisan test --parallel --compact
+        run: ./bin/test
